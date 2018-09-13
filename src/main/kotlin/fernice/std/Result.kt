@@ -1,4 +1,4 @@
-package modern.std
+package fernice.std
 
 fun Err(): Result<Nothing, Empty> {
     return Err(Empty)

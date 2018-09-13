@@ -1,16 +1,10 @@
-package modern.std
+package fernice.std
 
 sealed class Option<out T> {
 
     abstract fun isSome(): Boolean
 
     abstract fun isNone(): Boolean
-
-    abstract fun expect(message: String): T
-
-    abstract fun <R> map(mapper: (T) -> R): Option<R>
-
-    abstract fun <R> andThen(mapper: (T) -> Option<R>): Option<R>
 }
 
 object None : Option<Nothing>() {
@@ -23,28 +17,8 @@ object None : Option<Nothing>() {
         return true
     }
 
-    override fun expect(message: String): Nothing {
-        throw IllegalStateException(message)
-    }
-
     override fun toString(): String {
         return "None"
-    }
-
-    override fun <R> map(mapper: (Nothing) -> R): Option<R> {
-        return None
-    }
-
-    override fun <R> andThen(mapper: (Nothing) -> Option<R>): Option<R> {
-        return None
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return other is None
-    }
-
-    override fun hashCode(): Int {
-        return 17
     }
 }
 
@@ -58,20 +32,29 @@ data class Some<T>(val value: T) : Option<T>() {
         return false
     }
 
-    override fun expect(message: String): T {
-        return value
-    }
-
     override fun toString(): String {
         return "Some($value)"
     }
+}
 
-    override fun <R> map(mapper: (T) -> R): Option<R> {
-        return Some(mapper(value))
+inline fun <T, R> Option<T>.map(mapper: (T) -> R): Option<R> {
+    return when (this) {
+        is Some -> Some(mapper(this.value))
+        is None -> None
     }
+}
 
-    override fun <R> andThen(mapper: (T) -> Option<R>): Option<R> {
-        return mapper(value)
+inline fun <T, R> Option<T>.andThen(mapper: (T) -> Option<R>): Option<R> {
+    return when (this) {
+        is Some -> mapper(this.value)
+        is None -> None
+    }
+}
+
+fun <T> Option<T>.expect(message: String): T {
+    return when (this) {
+        is Some -> this.value
+        is None -> throw IllegalStateException(message)
     }
 }
 
