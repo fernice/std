@@ -8,23 +8,56 @@ fun Ok(): Result<Empty, Nothing> {
     return Ok(Empty)
 }
 
+/**
+ * Immutable monad representing the outcome of an operation by bearing either a value or an error.
+ * The positive outcome is represented by [Ok] and a negative outcome by [Err].
+ */
 sealed class Result<out T, out E> {
 
+    /**
+     * Expects the outcome to be [Ok], otherwise throws an [IllegalStateException] bearing the
+     * specified [message].
+     */
     abstract fun expect(message: String): T
 
+    /**
+     * Maps the value of this Result using the specified [mapper] function and returns a Result
+     * containing it. If the Result is [Err], the result of this function will also be [Err].
+     */
     abstract fun <U> map(mapper: (T) -> U): Result<U, E>
 
+    /**
+     * Maps the error of this Result using the specified [mapper] function and returns a Result
+     * containing it. If the Result is [Ok], the result of this function will also be [Ok].
+     */
     abstract fun <F> mapErr(mapper: (E) -> F): Result<T, F>
 
+    /**
+     * Turns the Result into an [Option] under the premise that [Ok] is expected. If the Result
+     * is [Err], the function will return [None] instead.
+     */
     abstract fun ok(): Option<T>
 
+    /**
+     * Turns the Result into an [Option] under the premise that [Err] is expected. If the Result
+     * is [Ok], the function will return [None] instead.
+     */
     abstract fun err(): Option<E>
 
+    /**
+     * Returns true if this Result is of type [Ok].
+     */
     abstract fun isOk(): Boolean
 
+    /**
+     * Returns true if this Result is of type [Err].
+     */
     abstract fun isErr(): Boolean
 }
 
+/**
+ * Concrete representation of a positive outcome of a [Result] bearing the value of the operation.
+ */
 data class Ok<out T>(val value: T) : Result<T, Nothing>() {
 
     override fun <U> map(mapper: (T) -> U): Result<U, Nothing> {
@@ -56,6 +89,9 @@ data class Ok<out T>(val value: T) : Result<T, Nothing>() {
     }
 }
 
+/**
+ * Concrete representation of a negative outcome of a [Result] bearing the error of the operation.
+ */
 data class Err<out E>(val value: E) : Result<Nothing, E>() {
 
     override fun expect(message: String): Nothing {
