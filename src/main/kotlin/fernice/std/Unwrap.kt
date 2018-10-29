@@ -16,7 +16,7 @@ fun <T, E> Result<T, E>.unwrap(): T {
     }
 }
 
-fun <T, E> Result<T, E>.unwrapOrElse(closure: (E) -> T): T {
+inline fun <T, E> Result<T, E>.unwrapOrElse(closure: (E) -> T): T {
     return when (this) {
         is Ok -> this.value
         is Err -> closure(this.value)
@@ -44,14 +44,14 @@ fun <T> Option<T>.unwrapOr(default: T): T {
     }
 }
 
-fun <T> Option<T>.unwrapOr(default: () -> T): T {
+inline fun <T> Option<T>.unwrapOr(default: () -> T): T {
     return when (this) {
         is Some -> this.value
         is None -> default()
     }
 }
 
-fun <T, E> Option<T>.mapOr(mapper: (T) -> E, default: E): E {
+inline fun <T, E> Option<T>.mapOr(mapper: (T) -> E, default: E): E {
     return when (this) {
         is Some -> mapper(this.value)
         is None -> default

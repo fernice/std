@@ -98,7 +98,6 @@ inline fun <T> Option<T>.let(block: (T) -> Unit) {
 /**
  * Executes the specified [block] if the Option is [Some], otherwise does nothing.
  */
-@Deprecated(message = "duplicated method", replaceWith = ReplaceWith("Option.let(block)", "fernice.std.Option.let"))
 inline fun <T> Option<T>.ifLet(block: (T) -> Unit) {
     if (this is Some) {
         block(this.value)

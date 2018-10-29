@@ -1,11 +1,11 @@
 package fernice.std
 
-fun Err(): Result<Nothing, Empty> {
-    return Err(Empty)
+fun Err(): Result<Nothing, Unit> {
+    return Err(Unit)
 }
 
-fun Ok(): Result<Empty, Nothing> {
-    return Ok(Empty)
+fun Ok(): Result<Unit, Nothing> {
+    return Ok(Unit)
 }
 
 /**
@@ -122,5 +122,3 @@ data class Err<out E>(val value: E) : Result<Nothing, E>() {
         return true
     }
 }
-
-object Empty
