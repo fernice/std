@@ -8,7 +8,7 @@
         <version>1.0.13</version>
     </parent>
     <artifactId>fernice-stdlib</artifactId>
-  <version>1.0.13-SNAPSHOT</version>
+  <version>1.0.13</version>
 
     <name>Standard Library</name>
     <description>Standard Library for Kotlin</description>
@@ -18,7 +18,7 @@
         <connection>scm:git:ssh://git@github.com:fernice/stdlib.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:fernice/stdlib.git</developerConnection>
         <url>https://github.com/fernice/stdlib</url>
-        <tag>HEAD</tag>
+        <tag>fernice-stdlib-1.0.13</tag>
     </scm>
 
 </project>
