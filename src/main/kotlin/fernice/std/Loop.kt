@@ -10,7 +10,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-@UseExperimental(ExperimentalContracts::class)
+@OptIn(ExperimentalContracts::class)
 inline fun loop(block: () -> Unit): Nothing {
     contract { callsInPlace(block, InvocationKind.AT_LEAST_ONCE) }
 
