@@ -8,7 +8,7 @@
         <version>1.0.26</version>
     </parent>
     <artifactId>fernice-stdlib</artifactId>
-    <version>1.0.26</version>
+    <version>1.0.27-SNAPSHOT</version>
 
     <name>Standard Library</name>
     <description>Standard Library for Kotlin</description>
