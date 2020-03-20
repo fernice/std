@@ -109,7 +109,7 @@ inline fun <T> Option<T>.ifLet(block: (T) -> Unit) {
  * otherwise [None]
  */
 @Deprecated(message = "Ambiguous naming scheme", replaceWith = ReplaceWith("toOption()", imports = ["fernice.std.toOption"]))
-fun <T> T?.into(): Option<T> {
+fun <T : Any> T?.into(): Option<T> {
     return if (this != null) {
         Some(this)
     } else {
@@ -121,10 +121,15 @@ fun <T> T?.into(): Option<T> {
  * Turns a nullable Kotlin type into an [Option]. Returns [Some] bearing the value if it's non-null,
  * otherwise [None]
  */
-fun <T> T?.toOption(): Option<T> {
+fun <T : Any> T?.toOption(): Option<T> {
     return if (this != null) {
         Some(this)
     } else {
         None
     }
+}
+
+fun <T : Any> Option<T>.toNullable(): T? = when (this) {
+    is Some -> this.value
+    is None -> null
 }
