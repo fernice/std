@@ -10,7 +10,7 @@
     <artifactId>fernice-stdlib</artifactId>
     <version>1.0.30-SNAPSHOT</version>
 
-    <name>fernice stdlib</name>
+    <name>fernice-stdlib</name>
     <description>Standard Library for Kotlin</description>
     <url>https://github.com/fernice/stdlib</url>
 
