@@ -33,16 +33,16 @@ sealed class Result<out T, out E> {
     abstract fun <F> mapErr(mapper: (E) -> F): Result<T, F>
 
     /**
-     * Turns the Result into an [Option] under the premise that [Ok] is expected. If the Result
+     * Turns the Result into a nullable value under the premise that [Ok] is expected. If the Result
      * is [Err], the function will return [None] instead.
      */
-    abstract fun ok(): Option<T>
+    abstract fun ok(): T?
 
     /**
-     * Turns the Result into an [Option] under the premise that [Err] is expected. If the Result
+     * Turns the Result into a nullable value under the premise that [Err] is expected. If the Result
      * is [Ok], the function will return [None] instead.
      */
-    abstract fun err(): Option<E>
+    abstract fun err(): E?
 
     /**
      * Returns true if this Result is of type [Ok].
@@ -72,12 +72,12 @@ data class Ok<out T>(val value: T) : Result<T, Nothing>() {
         return Ok(value)
     }
 
-    override fun ok(): Option<T> {
-        return Some(value)
+    override fun ok(): T {
+        return value
     }
 
-    override fun err(): Option<Nothing> {
-        return None
+    override fun err(): Nothing? {
+        return null
     }
 
     override fun isOk(): Boolean {
@@ -106,12 +106,12 @@ data class Err<out E>(val value: E) : Result<Nothing, E>() {
         return Err(mapper(value))
     }
 
-    override fun ok(): Option<Nothing> {
-        return None
+    override fun ok(): Nothing? {
+        return null
     }
 
-    override fun err(): Option<E> {
-        return Some(value)
+    override fun err(): E {
+        return value
     }
 
     override fun isOk(): Boolean {
